@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+<meta charset="UTF-8"/>
+<script src="webjars/jquery/1.9.1/jquery.min.js"></script>
+<script src="webjars/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+<link href="webjars/bootstrap/3.3.6/css/bootstrap.min.css"
+rel="stylesheet">
+</head>
+<body>
+<form action="/confirm" method="post" onSubmit="showDays(this)">
+<div class="container">
+<div class="row">
+<div class= "col-md-4 form-group">
+<tr>
+<td><label> start date</label></td>
+<td><div class ="input-group input-append date"  id="startDate">
+<input type="text" class="form-control" name="startDate"/>
+<span class="input-group-addon add-on">
+<span class="glyphicon glyphicon-calendar"></span></span>
+</div>
+</td>
+</div>
+<div class= "col-md-4 form-group">
+<td><label> end date</label></td>
+<td><div class ="input-group input-append date" id="endDate">
+<input type="text" class="form-control" name="endDate" />
+<span class="input-group-addon add-on">
+<span class="glyphicon glyphicon-calendar"></span></span>
+</div>
+</td>
+</tr>
+</div>
+
+</div>
+</div>
+
+</div>
+<div align="center" >
+<input type="submit" value="confirm"    />
+</div>
+<input type="hidden" id="daysbetween" value='${daysbetween}'/>
+
+<div align="center" id="noofdays"> <label>Number of Days:</label><td th:text="${daysbetween}"></td></div>
+
+</div>
+
+</form>
+</body>
+<script>
+$(function () {
+	$('.datepicker').each(function (){
+		$(this).datepicker({
+			autoclose: true,
+			format: 'dd-mm-yyyy',
+			todayBtn: "linked"
+		});
+	});
+	var sDate,eDate;
+
+	$("#startDate").datepicker({
+		dateFormat: 'DD-MM-YYYY',
+		autoclose: true,
+
+	})
+	.on('changeDate',function(e){
+		sDate = new Date($(this).datepicker('getUTCDate'));
+
+	});
+	$("#endDate").datepicker({
+		dateFormat: 'DD-MM-YYYY',
+		autoclose: true,
+	})
+	.on('changeDate',function(date){
+		eDate = new Date($(this).datepicker('getUTCDate'));
+		if(sDate && eDate && (eDate<sDate))
+		{
+
+			alert("end date is befor start date");
+
+		}
+	});
+
+
+
+});
+
+
+
+</script>
+<script language="JavaScript">
+function showDays(form) {
+
+	document.getElementById('noofdays').innerHTML.display=true;
+
+}
+</script>
+
+<script type="text/javascript">
+function showHide() {
+
+	var div = document.getElementById('noofdays');
+	if (div.style.display == 'none') {
+		div.style.display = '';
+	}
+	else {
+		div.style.display = 'none';
+	}
+}
+</script>
+
+</html>
